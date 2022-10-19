@@ -904,6 +904,7 @@ def non_max_suppression(
         # Filter by class
         if classes is not None:
             x = x[(x[:, 5:6] == torch.tensor(classes, device=x.device)).any(1)]
+            
 
         # Apply finite constraint
         # if not torch.isfinite(x).all():
@@ -933,6 +934,7 @@ def non_max_suppression(
                 i = i[iou.sum(1) > 1]  # require redundancy
 
         output[xi] = x[i]
+        print(output[xi].shape)
         if mps:
             output[xi] = output[xi].to(device)
         if (time.time() - t) > time_limit:
